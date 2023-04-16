@@ -22,6 +22,6 @@ setTimeout(() => {
 cls_nav.addEventListener('click', function(){
     opn_nav.style.display = 'block';
     cls_nav.style.display = 'none';
-    menu.style.height = '0px';
+    menu.style.height = '40px';
     list_items.style.display = 'none';
 });
