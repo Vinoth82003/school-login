@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Login</title>
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+    <nav class="nav">
+        <ul class="menu">
+            <div class="list-items">
+            <li class="list"><a href="/index.html" class="a">home</a></li>
+            <li class="list"><a href="#" class="a">anouncement</a></li>
+            <li class="list"><a href="#" class="a">events</a></li>
+            <li class="list"><a href="#" class="a">contact us</a></li>
+            <li class="list active"><a href="#" class="a">login</a></li>
+            </div>
+            <li class="cls-nav"></li>
+            <li class="open-nav"></li>
+        </ul>
+    </nav>
+    <section class="login-page">
+        <div class="inner-page">
+            <div class="from-container">
+                <div class="left-form-box">
+                    <img src="/img/student-login-side.svg" alt="student" class="left-box-img">
+                </div>
+                <div class="right-form-box">
+                    <form action="/student.html" class="form">
+                        <div class="stud_login">
+                          <h2 class="h2">
+                            student login
+                          </h2>
+                        </div>
+                        <div class="error-msg">
+                            <p id="msg" class="msg"></p>
+                            <div class="clsbtn">x</div>
+                        </div>
+                        <label for="regno" class="label name">
+                            <span class=" icon prof-icon"></span>
+                            <input type="text" 
+                             name="" id="regno" 
+                             placeholder="2023MTMHSS001" 
+                             class="regno"
+                            />
+                            
+                        </label>
+                        <label for="dob" class="label dob">
+                            <span class="icon dob-icon"></span>
+                            <input type="text" 
+                             name="" 
+                             id="dobinput"
+                             placeholder="dd-mm-yyyy"
+                             class="dobinput"
+                            />
+                        </label>
+                        <div class="submitbtn">
+                            <button type="button" class="submit">submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="/js/login.js"></script>
+    <script src="/js/active.js"></script>
+    <script src="/js/menu.js"></script>
+</body>
+</html>
