@@ -61,3 +61,4 @@ function downloadWord() {
   downloadLink.download = "myTable.doc";
   document.body.appendChild(downloadLink);
   downloadLink.click();
+}
