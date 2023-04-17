@@ -36,7 +36,7 @@
 
 function downloadWord() {
   // Get the HTML table
-  var htmlTable = document.getElementById("myTable");
+  var htmlTable = document.getElementById("marks");
 
   // Create a table in a new Word document
   var table = "<table>" + htmlTable.innerHTML + "</table>";
