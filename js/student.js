@@ -37,39 +37,18 @@
 function downloadWord() {
   // Get the HTML table
   var htmlTable = document.getElementById("myTable");
-  
-  // Create a new Word document
-  var wordDoc = new ActiveXObject("Word.Application");
-  var doc = wordDoc.Documents.Add();
-  
-  // Loop through the rows of the HTML table and create a row in the Word table for each row
-  var rows = htmlTable.getElementsByTagName("tr");
-  for (var i = 0; i < rows.length; i++) {
-    var row = rows[i];
-    var cells = row.getElementsByTagName("td");
-    var wordRow = doc.Tables(1).Rows.Add();
-    
-    // Loop through the cells of the row and create a cell in the Word table for each cell
-    for (var j = 0; j < cells.length; j++) {
-      var cell = cells[j];
-      wordRow.Cells(j + 1).Range.Text = cell.innerHTML;
-    }
-  }
-  
-  // Save the Word document as a file and close it
-  doc.SaveAs("myTable.doc");
-  doc.Close();
-  
-  // Quit Word
-  wordDoc.Quit();
-}
 
-//   // Convert the XML document to a string
-//   var xmlString = (new XMLSerializer()).serializeToString(xml);
+  // Create a table in a new Word document
+  var table = "<table>" + htmlTable.innerHTML + "</table>";
+
+  // Create a new Word document as a Blob object
+  var wordDocument = new Blob(['<!DOCTYPE html><html><head><meta charset="utf-8"><title>Table</title></head><body>' + table + '</body></html>'], {type:'application/vnd.ms-word'});
   
-//   // Download the string as an Excel file
-//   var link = document.createElement("a");
-//   link.setAttribute("href", "data:application/vnd.ms-excel;charset=utf-8," + encodeURIComponent(xmlString));
-//   link.setAttribute("download", "myTable.xls");
-//   link.click();
-// }
+  // Create a download link for the Word document and click it to download
+  var downloadLink = document.createElement("a");
+  downloadLink.href = URL.createObjectURL(wordDocument);
+  downloadLink.download = "myTable.doc";
+  document.body.appendChild(downloadLink);
+  downloadLink.click();
+  document.body.removeChild(downloadLink);
+}
