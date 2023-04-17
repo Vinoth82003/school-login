@@ -3,9 +3,9 @@ function downloadExcel() {
   var htmlTable = document.getElementById("marks");
   
   // Create a new XML document with the Excel namespace
-  var xml = new XMLDocument();
-  var root = xml.createElementNS("urn:schemas-microsoft-com:office:spreadsheet", "Workbook");
-  xml.appendChild(root);
+  var parser = new DOMParser();
+  var xml = parser.parseFromString('<?xml version="1.0" encoding="UTF-8"?><Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"></Workbook>', 'text/xml');
+  var root = xml.documentElement;
   
   // Create a worksheet element and append it to the XML document
   var worksheet = xml.createElement("Worksheet");
@@ -42,4 +42,3 @@ function downloadExcel() {
   link.setAttribute("download", "myTable.xls");
   link.click();
 }
-
