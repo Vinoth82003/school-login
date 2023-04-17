@@ -24,7 +24,7 @@ function downloadExcel() {
   var blob = new Blob([wbout], { type: "application/octet-stream" });
 
   // Save the Excel file using FileSaver.js library
-  saveAs(blob, "myExcelFile.xlsx");
+  saveAs(blob, "marksheet.xlsx");
 }
 
 // word download function.,.
@@ -58,7 +58,7 @@ function downloadWord() {
   // Create a download link for the Word document and click it to download
   var downloadLink = document.createElement("a");
   downloadLink.href = URL.createObjectURL(wordDocument);
-  downloadLink.download = "myTable.doc";
+  downloadLink.download = "marksheet.doc";
   document.body.appendChild(downloadLink);
   downloadLink.click();
   document.body.removeChild(downloadLink);
