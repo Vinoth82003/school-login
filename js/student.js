@@ -1,35 +1,28 @@
 function downloadExcel() {
-    // Select the HTML table element
-    var table = document.getElementById("marks");
+  // Select the HTML table element
+  var table = document.getElementById("marks");
 
-    // Create a new Excel workbook
-    var wb = XLSX.utils.book_new();
-
-    // Convert the HTML table to a worksheet and add it to the workbook
-    var ws = XLSX.utils.table_to_sheet(table);
-    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-
-    // Convert the workbook to an Excel file
-    var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
-
-    // Create a new Blob object
-    var blob = new Blob([s2ab(wbout)], { type: "application/octet-stream" });
-
-    // Create a link element with the download attribute and click it programmatically
-    var link = document.createElement("a");
-    link.setAttribute("href", URL.createObjectURL(blob));
-    link.setAttribute("download", "myExcelFile.xlsx");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
-
-// Utility function to convert a string to an ArrayBuffer
-function s2ab(s) {
-    var buf = new ArrayBuffer(s.length);
-    var view = new Uint8Array(buf);
-    for (var i = 0; i < s.length; i++) {
-        view[i] = s.charCodeAt(i) & 0xFF;
+  // Convert the HTML table to an array of arrays representing the worksheet data
+  var data = [];
+  for (var i = 0; i < table.rows.length; i++) {
+    var row = [];
+    for (var j = 0; j < table.rows[i].cells.length; j++) {
+      row.push(table.rows[i].cells[j].innerText);
     }
-    return buf;
+    data.push(row);
+  }
+
+  // Convert the data to a SheetJS worksheet object
+  var worksheet = XLSX.utils.aoa_to_sheet(data);
+
+  // Create a new Excel workbook and add the worksheet to it
+  var workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+  // Generate the Excel file as a Blob object
+  var wbout = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+  var blob = new Blob([wbout], { type: "application/octet-stream" });
+
+  // Save the Excel file using FileSaver.js library
+  saveAs(blob, "myExcelFile.xlsx");
 }
