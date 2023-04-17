@@ -31,7 +31,7 @@ function downloadExcel() {
 
 function downloadWord() {
   // Get the HTML table
-  var htmlTable = document.getElementById("myTable");
+  var htmlTable = document.getElementById("marks");
 
   // Modify the HTML table to add table outline
   htmlTable.setAttribute("border", "1");
