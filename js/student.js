@@ -1,54 +1,37 @@
-// function downloadExcel() {
-//   // Get the HTML table
-//   var htmlTable = document.getElementById("marks");
-  
-//   // Create a new XML document with the Excel namespace
-//   var parser = new DOMParser();
-//   var xml = parser.parseFromString('<?xml version="1.0" encoding="UTF-8"?><Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"></Workbook>', 'text/xml');
-//   var root = xml.documentElement;
-  
-//   // Create a worksheet element and append it to the XML document
-//   var worksheet = xml.createElement("Worksheet");
-//   worksheet.setAttribute("ss:Name", "Sheet1");
-//   root.appendChild(worksheet);
-  
-//   // Loop through the rows of the HTML table and create a row element for each row
-//   var rows = htmlTable.getElementsByTagName("tr");
-//   for (var i = 0; i < rows.length; i++) {
-//     var row = rows[i];
-//     var xmlRow = xml.createElement("Row");
-    
-//     // Loop through the cells of the row and create a cell element for each cell
-//     var cells = row.getElementsByTagName("td");
-//     for (var j = 0; j < cells.length; j++) {
-//       var cell = cells[j];
-//       var xmlCell = xml.createElement("Cell");
-//       var data = xml.createElement("Data");
-//       data.appendChild(xml.createTextNode(cell.innerHTML));
-//       xmlCell.appendChild(data);
-//       xmlRow.appendChild(xmlCell);
-//     }
-    
-//     // Append the row to the worksheet element
-//     worksheet.appendChild(xmlRow);
-//   }
-  
 
-function downloadWord() {
-  // Get the HTML table
-  var htmlTable = document.getElementById("marks");
+		function downloadExcel() {
+			// Select the HTML table element
+			var table = document.getElementById("marks");
 
-  // Create a table in a new Word document
-  var table = "<table>" + htmlTable.innerHTML + "</table>";
+			// Create a new Excel workbook
+			var wb = XLSX.utils.book_new();
 
-  // Create a new Word document as a Blob object
-  var wordDocument = new Blob(['<!DOCTYPE html><html><head><meta charset="utf-8"><title>Table</title></head><body>' + table + '</body></html>'], {type:'application/vnd.ms-word'});
-  
-  // Create a download link for the Word document and click it to download
-  var downloadLink = document.createElement("a");
-  downloadLink.href = URL.createObjectURL(wordDocument);
-  downloadLink.download = "myTable.doc";
-  document.body.appendChild(downloadLink);
-  downloadLink.click();
-  document.body.removeChild(downloadLink);
-}
+			// Convert the HTML table to a worksheet and add it to the workbook
+			var ws = XLSX.utils.table_to_sheet(table);
+			XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+			// Convert the workbook to an Excel file
+			var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+
+			// Create a new Blob object
+			var blob = new Blob([s2ab(wbout)], { type: "application/octet-stream" });
+
+			// Create a link element with the download attribute and click it programmatically
+			var link = document.createElement("a");
+			link.setAttribute("href", URL.createObjectURL(blob));
+			link.setAttribute("download", "myExcelFile.xlsx");
+			document.body.appendChild(link);
+			link.click();
+			document.body.removeChild(link);
+		}
+
+		// Utility function to convert a string to an ArrayBuffer
+		function s2ab(s) {
+			var buf = new ArrayBuffer(s.length);
+			var view = new Uint8Array(buf);
+			for (var i = 0; i < s.length; i++) {
+				view[i] = s.charCodeAt(i) & 0xFF;
+			}
+			return buf;
+		}
+
